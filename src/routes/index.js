@@ -9,6 +9,7 @@ import cartRoutes from "../modules/cart/cart.routes.js";
 import wishlistRoutes from "../modules/wishlist/wishlist.routes.js";
 import orderRoutes from "../modules/orders/order.routes.js";
 import paymentRoutes from "../modules/payments/payment.routes.js"
+import couponRoutes from "../modules/coupons/coupon.routes.js";
 
 const router = Router();
 
@@ -28,5 +29,6 @@ router.use("/api/v1/cart", cartRoutes);
 router.use("/api/v1/wishlist", wishlistRoutes);
 router.use("/api/v1/orders", orderRoutes);
 router.use("/api/v1/payments", paymentRoutes);
+router.use("/api/v1/coupons", couponRoutes);
 
 export default router;
