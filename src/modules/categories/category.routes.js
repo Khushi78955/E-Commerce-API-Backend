@@ -1,6 +1,6 @@
 import {Router} from "express";
 
-import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory } from "./category.repository.js";
+import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory } from "./category.controller.js";
 import { createCategorySchema, updateCategorySchema, categoryIdSchema } from "./category.validation.js";
 
 import validate from "../../middlewares/validate.js";

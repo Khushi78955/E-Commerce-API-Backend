@@ -5,7 +5,7 @@ import { registerController, loginController, refreshTokenController, logoutCont
 import { protect } from "./auth.middleware.js";
 import validate from "../../middlewares/validate.js"
 
-import { registerSchema, loginSchema, refreshTokenSchema, forgotPasswordSchema, resetPasswordSchema } from "./auth.validation.js";
+import { registerSchema, loginSchema, refreshTokenSchema, verifyEmailSchema, forgotPasswordSchema, resetPasswordSchema } from "./auth.validation.js";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.post("/login", validate(loginSchema), loginController)
 router.post("/refresh-token", validate(refreshTokenSchema), refreshTokenController)
 router.post("/logout", validate(refreshTokenSchema), logoutController)
 router.post("/logout-all", protect, logoutAllDevicesController)
-router.get("/verify-email/:token", verifyEmailController)
+router.get("/verify-email/:token", validate(verifyEmailSchema), verifyEmailController)
 router.post("/forgot-password", validate(forgotPasswordSchema), forgotPasswordController)
 router.post("/reset-password", validate(resetPasswordSchema), resetPasswordController)
 router.get("/me", protect, getCurrentUserController)

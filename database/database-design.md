@@ -47,14 +47,10 @@ PostgreSQL
 - inventory_movements
 
 
-
 ## Shopping
 
-- carts
 - cart_items
-- wishlists
 - wishlist_items
-
 
 
 ## Customer

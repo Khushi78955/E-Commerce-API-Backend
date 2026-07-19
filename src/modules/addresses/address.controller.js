@@ -1,4 +1,4 @@
-import asyncHandler from "../../utils/asyncHandler.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
 
 import {getAllAddressesByUserIdService, getAddressByIdService, createAddressService, updateAddressService, deleteAddressService} from "./address.service.js";
 

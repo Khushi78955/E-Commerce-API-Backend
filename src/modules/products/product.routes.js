@@ -1,6 +1,6 @@
 import {Router} from "express"
 
-import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from "./product.repository.js"
+import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from "./product.controller.js"
 import { productIdSchema, createProductSchema, updateProductSchema } from "./product.validation.js"
 
 import validate from "../../middlewares/validate.js";

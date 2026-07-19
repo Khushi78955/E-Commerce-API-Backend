@@ -1,4 +1,4 @@
-import asyncHandler from "../../utils/asyncHandler.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
 
 import { getCartItemsService, addToCartService, updateCartItemService, removeCartItemService, clearCartService } from "./cart.service.js";
 

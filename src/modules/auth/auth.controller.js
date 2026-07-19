@@ -1,6 +1,6 @@
 import {register, login, refreshAccessToken, logout, logoutAllDevices, verifyEmail, forgotPassword, resetPassword, getCurrentUser} from "./auth.service.js";
 
-import asyncHandler from "../../utils/asyncHandler.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
 
 export const registerController = asyncHandler(async (req, res) => {
     const result = await register(req.body);

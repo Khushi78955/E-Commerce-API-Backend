@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { getInventoryByProductId, createInventory, updateInventory } from "./inventory.repository.js";
+import { getInventoryByProductId, createInventory, updateInventory } from "./inventory.controller.js";
 import { productIdSchema, updateInventorySchema } from "./inventory.validation.js";
 
 import validate from "../../middlewares/validate.js";

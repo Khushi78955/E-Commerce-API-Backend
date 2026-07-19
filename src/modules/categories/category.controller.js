@@ -1,4 +1,4 @@
-import asyncHandler from "../../utils/asyncHandler.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
 
 import { getAllCategoriesService, getCategoryByIdService, createCategoryService, updateCategoryService, deleteCategoryService } from "./category.service.js";
 
