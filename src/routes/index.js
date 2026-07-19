@@ -7,7 +7,7 @@ import inventoryRoutes from "../modules/inventory/inventory.routes.js";
 import addressRoutes from "../modules/addresses/address.routes.js";
 import cartRoutes from "../modules/cart/cart.routes.js";
 import wishlistRoutes from "../modules/wishlist/wishlist.routes.js";
-
+import orderRoutes from "../modules/orders/order.routes.js";
 
 const router = Router();
 
@@ -25,5 +25,7 @@ router.use("/api/v1/inventory", inventoryRoutes);
 router.use("/api/v1/addresses", addressRoutes);
 router.use("/api/v1/cart", cartRoutes);
 router.use("/api/v1/wishlist", wishlistRoutes);
+router.use("/api/v1/orders", orderRoutes);
+
 
 export default router;
