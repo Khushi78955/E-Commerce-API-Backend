@@ -2,6 +2,7 @@ import {Router} from "express";
 
 import authRoutes from "../modules/auth/auth.routes.js";
 import categoryRoutes from "../modules/categories/category.routes.js";
+import productRoutes from "../modules/products/product.routes.js";
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.get("/", (req, res) => {
 
 router.use("/api/v1/auth", authRoutes);
 router.use("/api/v1/categories", categoryRoutes);
+router.use("/api/v1/products", productRoutes);
 
 export default router;
