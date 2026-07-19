@@ -30,7 +30,8 @@ CREATE TABLE oauth_accounts(
 CREATE TABLE refresh_tokens(
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    token_hash TEXT NOT NULL,
+    jti UUID NOT NULL UNIQUE,
+    token_hash TEXT NOT NULL UNIQUE,
     expires_at TIMESTAMPTZ NOT NULL,
     revoked_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -40,7 +41,7 @@ CREATE TABLE refresh_tokens(
 CREATE TABLE email_verification_tokens(
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    token_hash TEXT NOT NULL,
+    token_hash TEXT NOT NULL UNIQUE,
     expires_at TIMESTAMPTZ NOT NULL,
     used_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -50,7 +51,7 @@ CREATE TABLE email_verification_tokens(
 CREATE TABLE password_reset_tokens(
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    token_hash TEXT NOT NULL,
+    token_hash TEXT NOT NULL UNIQUE,
     expires_at TIMESTAMPTZ NOT NULL,
     used_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -281,11 +282,11 @@ CREATE TABLE coupons (
     CHECK (minimum_order_amount >= 0)
 );
 
-CREATE TABLE coupon_usages (
+CREATE TABLE coupon_redemptions (
     coupon_id BIGINT NOT NULL REFERENCES coupons(id) ON DELETE CASCADE,
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     order_id BIGINT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-    used_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    redeemed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (coupon_id, user_id, order_id)
 );
