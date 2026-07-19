@@ -54,6 +54,14 @@ export const refreshTokenSchema = z.object({
     }),
 });
 
+export const verifyEmailSchema = z.object({
+    query: z.object({
+        token: z
+            .string()
+            .min(1, "Verification token is required."),
+    }),
+});
+
 export const forgotPasswordSchema = z.object({
     body: z.object({
         email: z
