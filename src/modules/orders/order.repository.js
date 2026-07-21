@@ -127,3 +127,14 @@ export const updateOrderStatus = async (orderId, status) => {
 
     return rows[0];
 };
+
+export const incrementCouponUsage = async (client, couponId) => {
+    await client.query(
+        `
+        UPDATE coupons
+        SET used_count = used_count + 1
+        WHERE id = $1
+        `,
+        [couponId]
+    );
+};

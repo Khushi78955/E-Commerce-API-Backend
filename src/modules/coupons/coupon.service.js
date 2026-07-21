@@ -1,5 +1,5 @@
 import ApiError from "../../utils/ApiError.js";
-
+import { validateCoupon } from "./coupon.repository.js";
 import { createCoupon, getAllCoupons, getCouponById, getCouponByCode, updateCoupon, deleteCoupon } from "./coupon.repository.js";
 
 export const createNewCoupon = async (code, discountType, discountValue, minimumOrderAmount, usageLimit, expiresAt) => {
@@ -60,4 +60,47 @@ export const removeCoupon = async (id) => {
         throw new ApiError(404, "Coupon not found");
     }
     return await deleteCoupon(id);
+};
+
+
+
+export const verifyCoupon = async (code, subtotal) => {
+    const coupon = await validateCoupon(code);
+
+    if (!coupon) {
+        throw new ApiError(404, "Coupon not found.");
+    }
+
+    if (new Date(coupon.expires_at) < new Date()) {
+        throw new ApiError(400, "Coupon has expired.");
+    }
+
+    if (coupon.used_count >= coupon.usage_limit) {
+        throw new ApiError(400, "Coupon usage limit reached.");
+    }
+
+    if (subtotal < Number(coupon.minimum_order_amount)) {
+        throw new ApiError(
+            400,
+            `Minimum order amount is ₹${coupon.minimum_order_amount}.`
+        );
+    }
+
+    let discount = 0;
+
+    if (coupon.discount_type === "percentage") {
+        discount =
+            subtotal * (Number(coupon.discount_value) / 100);
+    } else {
+        discount = Number(coupon.discount_value);
+    }
+
+    if (discount > subtotal) {
+        discount = subtotal;
+    }
+
+    return {
+        coupon,
+        discount,
+    };
 };

@@ -1,7 +1,9 @@
 import pool from "../../config/db.js";
 import ApiError from "../../utils/ApiError.js";
-
+import { verifyCoupon } from "../coupons/coupon.service.js";
 import { getCartItemsByUser, getAddressById, createOrder, createOrderItem, updateInventory, clearCart, getOrdersByUser, getOrderById, getAllOrders, updateOrderStatus } from "./order.repository.js";
+import { incrementCouponUsage } from "../coupons/coupon.repository.js";
+
 
 export const checkout = async (userId, addressId, couponCode) => {
     const address = await getAddressById(addressId, userId);
@@ -24,8 +26,12 @@ export const checkout = async (userId, addressId, couponCode) => {
     }
 
     let discount = 0;
-    if(couponCode){
+    let coupon = null;
 
+    if (couponCode) {
+        const result = await verifyCoupon(couponCode, subtotal);
+        coupon = result.coupon;
+        discount = result.discount;
     }
 
     const shippingCost = 0;
@@ -41,6 +47,11 @@ export const checkout = async (userId, addressId, couponCode) => {
             await updateInventory(client, item.product_id, item.quantity)
         }
         await clearCart(client, userId);
+        if (coupon) {
+            if (coupon) {
+                await incrementCouponUsage(client, coupon.id);
+            }
+        }
         await client.query("COMMIT");
         return order;
     } catch(err){

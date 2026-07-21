@@ -105,3 +105,16 @@ export const incrementCouponUsage = async (id) => {
         [id]
     );
 };
+
+export const validateCoupon = async (code) => {
+    const { rows } = await pool.query(
+        `
+        SELECT *
+        FROM coupons
+        WHERE code = $1
+        `,
+        [code]
+    );
+
+    return rows[0];
+};
