@@ -10,6 +10,7 @@ import wishlistRoutes from "../modules/wishlist/wishlist.routes.js";
 import orderRoutes from "../modules/orders/order.routes.js";
 import paymentRoutes from "../modules/payments/payment.routes.js"
 import couponRoutes from "../modules/coupons/coupon.routes.js";
+import reviewRoutes from "../modules/reviews/review.routes.js";
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.use("/api/v1/wishlist", wishlistRoutes);
 router.use("/api/v1/orders", orderRoutes);
 router.use("/api/v1/payments", paymentRoutes);
 router.use("/api/v1/coupons", couponRoutes);
+router.use("/api/v1/reviews", reviewRoutes);
 
 export default router;

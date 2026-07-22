@@ -68,15 +68,15 @@ export const verifyCoupon = async (code, subtotal) => {
     const coupon = await validateCoupon(code);
 
     if (!coupon) {
-        throw new ApiError(404, "Coupon not found.");
+        throw new ApiError(404, "Coupon not found");
     }
 
     if (new Date(coupon.expires_at) < new Date()) {
-        throw new ApiError(400, "Coupon has expired.");
+        throw new ApiError(400, "Coupon has expired");
     }
 
     if (coupon.used_count >= coupon.usage_limit) {
-        throw new ApiError(400, "Coupon usage limit reached.");
+        throw new ApiError(400, "Coupon usage limit reached");
     }
 
     if (subtotal < Number(coupon.minimum_order_amount)) {
