@@ -11,6 +11,7 @@ import routes from "./routes/index.js"
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js"
 
+import "./listeners/auth.listener.js";
 
 const app = express();
 

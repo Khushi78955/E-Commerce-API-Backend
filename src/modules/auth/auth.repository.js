@@ -13,6 +13,19 @@ export const findUserByEmail = async (email) => {
     return rows[0]
 }
 
+export const findUnverifiedUserByEmail = async (email) => {
+    const query = 
+    `
+        SELECT id, first_name, last_name, email, is_email_verified, is_active
+        FROM users
+        WHERE email = $1
+          AND deleted_at IS NULL
+        LIMIT 1;
+    `;
+
+    const { rows } = await pool.query(query, [email]);
+    return rows[0];
+};
 
 export const findUserById = async (userId) => {
     const query = 
@@ -202,6 +215,17 @@ export const markEmailVerificationTokenAsUsed = async (tokenId) => {
     `;
     await pool.query(query, [tokenId]);
 }
+
+export const invalidateEmailVerificationTokens = async (userId) => {
+    const query = 
+    `
+    UPDATE email_verification_tokens
+    SET used_at = NOW()
+    WHERE user_id = $1
+    AND used_at IS NULL;
+    `;
+    await pool.query(query, [userId]);
+};
 
 export const verifyUserEmail = async (userId) => {
     const query =

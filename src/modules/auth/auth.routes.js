@@ -1,11 +1,12 @@
 import { Router } from "express";
 
-import { registerController, loginController, refreshTokenController, logoutController, logoutAllDevicesController, verifyEmailController, forgotPasswordController, resetPasswordController, getCurrentUserController } from "./auth.controller.js";
+import { registerController, loginController, refreshTokenController, logoutController, logoutAllDevicesController, verifyEmailController, forgotPasswordController, resetPasswordController, getCurrentUserController, resendVerificationEmailController } from "./auth.controller.js";
 
 import { protect } from "./auth.middleware.js";
 import validate from "../../middlewares/validate.js"
 
-import { registerSchema, loginSchema, refreshTokenSchema, verifyEmailSchema, forgotPasswordSchema, resetPasswordSchema } from "./auth.validation.js";
+import { registerSchema, loginSchema, refreshTokenSchema, verifyEmailSchema, forgotPasswordSchema, resetPasswordSchema, resendVerificationEmailSchema} from "./auth.validation.js";
+
 
 const router = Router();
 
@@ -18,6 +19,6 @@ router.get("/verify-email", validate(verifyEmailSchema), verifyEmailController)
 router.post("/forgot-password", validate(forgotPasswordSchema), forgotPasswordController)
 router.post("/reset-password", validate(resetPasswordSchema), resetPasswordController)
 router.get("/me", protect, getCurrentUserController)
-
+router.post("/resend-verification", validate(resendVerificationEmailSchema), resendVerificationEmailController);
 
 export default router;

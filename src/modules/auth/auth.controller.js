@@ -1,6 +1,8 @@
 import {register, login, refreshAccessToken, logout, logoutAllDevices, verifyEmail, forgotPassword, resetPassword, getCurrentUser} from "./auth.service.js";
-
 import asyncHandler from "../../middlewares/asyncHandler.js";
+import { resendVerificationEmail } from "./auth.service.js";
+import ApiResponse from "../../utils/ApiResponse.js";
+
 
 export const registerController = asyncHandler(async (req, res) => {
     const result = await register(req.body);
@@ -71,4 +73,13 @@ export const resetPasswordController = asyncHandler(async (req, res) => {
 export const getCurrentUserController = asyncHandler(async (req, res) => {
     const result = await getCurrentUser(req.user.userId);
     res.status(200).json(result);
+});
+
+
+export const resendVerificationEmailController = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    const result = await resendVerificationEmail(email);
+    return res.status(200).json(
+        new ApiResponse(200, result.message)
+    );
 });

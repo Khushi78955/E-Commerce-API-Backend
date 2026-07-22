@@ -90,3 +90,10 @@ export const resetPasswordSchema = z.object({
             ),
     }),
 });
+
+
+export const resendVerificationEmailSchema = {
+    body: z.object({
+        email: z.email("Invalid email address"),
+    }),
+};

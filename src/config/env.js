@@ -25,6 +25,9 @@ const env = cleanEnv(process.env, {
     SMTP_PORT: port(),
     SMTP_USER: str(),
     SMTP_PASS: str(),
+    REDIS_HOST: str(),
+    REDIS_PORT: port(),
+    REDIS_PASSWORD: str({ default: "" }),
 });
 
 export default env;

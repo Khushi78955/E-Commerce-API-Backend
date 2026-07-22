@@ -14,6 +14,9 @@ import sendResetPasswordEmail from "../../mail/sendResetPasswordEmail.js";
 
 import { findUserByEmail, findUserById, createUser, findRoleByName, assignRoleToUser, getUserRoles, createRefreshToken, findRefreshToken, revokeRefreshToken, revokeAllRefreshTokens, createUserSession, deleteUserSession, createLoginAttempt, createEmailVerificationToken, findEmailVerificationToken, markEmailVerificationTokenAsUsed, verifyUserEmail, createPasswordResetToken, findPasswordResetToken, markPasswordResetTokenAsUsed, updateUserPassword, findOAuthAccount, createOAuthAccount, updateLastLogin } from "./auth.repository.js";
 
+import eventBus from "../../events/eventBus.js";
+
+import { findUnverifiedUserByEmail, invalidateEmailVerificationTokens } from "./auth.repository.js";
 
 const generateRandomToken = () => {
     return crypto.randomBytes(32).toString("hex");
@@ -39,7 +42,7 @@ export const register = async ({firstName, lastName, email, password}) => {
     }
 
     await assignRoleToUser(user.id, customerRole.id);
-    const verificationToken = generateRandomToken();
+    const verificationToken = crypto.randomBytes(32).toString("hex");
     const verificationTokenHash = hashToken(verificationToken);
     const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24);
 
@@ -49,10 +52,10 @@ export const register = async ({firstName, lastName, email, password}) => {
         expiresAt,
     });
 
-    await sendVerificationEmail({
+    eventBus.emit("auth.emailVerificationRequested", {
         email: user.email,
         firstName: user.first_name,
-        token: verificationToken,
+        verificationToken,
     });
 
     return {
@@ -70,8 +73,11 @@ export const login = async ({email, password, deviceName, ipAddress, userAgent})
         await createLoginAttempt({email, ipAddress, userAgent, successful: false})
         throw new ApiError(401, "Invalid email or password");
     }
-    if(!user.is_active){
+    if (!user.is_active) {
         throw new ApiError(403, "Your account has been disabled");
+    }
+    if (!user.is_email_verified) {
+        throw new ApiError(403, "Please verify your email before logging in");
     }
 
     const passwordMatched = await comparePassword(password, user.password_hash)
@@ -239,11 +245,11 @@ export const forgotPassword = async (email) => {
         expiresAt
     })
 
-    await sendResetPasswordEmail({
+    eventBus.emit("user.forgot-password", {
         email: user.email,
         firstName: user.first_name,
-        token: resetToken
-    })
+        token: resetToken,
+    });
 
     return {
         message: "If an account exists with this email, a password reset link has been sent"
@@ -291,5 +297,37 @@ export const getCurrentUser = async (userId) => {
         createdAt: user.created_at,
         updatedAt: user.updated_at,
         lastLoginAt: user.last_login_at,
+    };
+};
+
+
+export const resendVerificationEmail = async (email) => {
+    const user = await findUnverifiedUserByEmail(email);
+    if (!user) {
+        throw new ApiError(404, "User not found.");
+    }
+    if (user.is_email_verified) {
+        throw new ApiError(400, "Email is already verified.");
+    }
+    if (!user.is_active) {
+        throw new ApiError(403, "Your account has been disabled.");
+    }
+
+    await invalidateEmailVerificationTokens(user.id);
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const verificationTokenHash = hashToken(verificationToken);
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24);
+    await createEmailVerificationToken({
+        userId: user.id,
+        tokenHash: verificationTokenHash,
+        expiresAt,
+    });
+    eventBus.emit("auth.emailVerificationRequested", {
+        email: user.email,
+        firstName: user.first_name,
+        verificationToken,
+    });
+    return {
+        message: "Verification email sent successfully.",
     };
 };
