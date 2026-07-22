@@ -50,7 +50,7 @@ export const logoutAllDevicesController = asyncHandler(async (req, res) => {
 
 
 export const verifyEmailController = asyncHandler(async (req, res) => {
-    const { token } = req.params;
+    const { token } = req.query;
     const result = await verifyEmail(token);
     res.status(200).json(result);
 });
