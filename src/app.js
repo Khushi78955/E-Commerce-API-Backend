@@ -10,6 +10,9 @@ import rateLimiter from "./middlewares/rateLimiter.js";
 import routes from "./routes/index.js"
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js"
+import userRoutes from "./modules/user/user.routes.js";
+import adminRoutes from "./modules/admin/admin.routes.js";
+import rolesRoutes from "./modules/roles/roles.routes.js";
 
 import "./listeners/auth.listener.js";
 
@@ -40,6 +43,11 @@ app.get("/health", (req, res) => {
 
 app.use(rateLimiter);
 app.use("/", routes);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/roles", rolesRoutes);
+
+
 
 app.use(notFound);
 app.use(errorHandler);
