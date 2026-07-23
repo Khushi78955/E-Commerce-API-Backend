@@ -6,7 +6,7 @@ const sendVerificationEmail = async ({
     firstName,
     token,
 }) => {
-    const verificationLink = `${env.CLIENT_URL}/verify-email?token=${token}`;
+    const verificationLink = `http://localhost:8001/api/v1/auth/verify-email?token=${token}`;
 
     await transporter.sendMail({
         from: `"E-Commerce API" <${env.SMTP_USER}>`,

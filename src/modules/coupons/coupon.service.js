@@ -7,7 +7,6 @@ export const createNewCoupon = async (code, discountType, discountValue, minimum
     if (existingCoupon) {
         throw new ApiError(400, "Coupon code already exist");
     }
-
     return await createCoupon(code, discountType, discountValue, minimumOrderAmount, usageLimit, expiresAt);
 };
 
@@ -19,11 +18,9 @@ export const getCoupons = async () => {
 
 export const updateExistingCoupon = async (id, updates) => {
     const coupon = await getCouponById(id);
-
     if (!coupon) {
         throw new ApiError(404, "Coupon not found");
     }
-
     if (updates.code) {
         const existingCoupon = await getCouponByCode(updates.code);
         if (existingCoupon && existingCoupon.id !== id) {
@@ -66,19 +63,15 @@ export const removeCoupon = async (id) => {
 
 export const verifyCoupon = async (code, subtotal) => {
     const coupon = await validateCoupon(code);
-
     if (!coupon) {
         throw new ApiError(404, "Coupon not found");
     }
-
     if (new Date(coupon.expires_at) < new Date()) {
         throw new ApiError(400, "Coupon has expired");
     }
-
     if (coupon.used_count >= coupon.usage_limit) {
         throw new ApiError(400, "Coupon usage limit reached");
     }
-
     if (subtotal < Number(coupon.minimum_order_amount)) {
         throw new ApiError(
             400,
@@ -87,7 +80,6 @@ export const verifyCoupon = async (code, subtotal) => {
     }
 
     let discount = 0;
-
     if (coupon.discount_type === "percentage") {
         discount =
             subtotal * (Number(coupon.discount_value) / 100);
@@ -98,9 +90,5 @@ export const verifyCoupon = async (code, subtotal) => {
     if (discount > subtotal) {
         discount = subtotal;
     }
-
-    return {
-        coupon,
-        discount,
-    };
+    return {coupon, discount};
 };

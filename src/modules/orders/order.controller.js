@@ -5,7 +5,7 @@ import {checkout, getMyOrders, getMyOrderById, getOrders, changeOrderStatus} fro
 export const createOrder = asyncHandler(async (req, res) => {
     const { addressId, couponCode } = req.body;
     const order = await checkout(
-        req.user.id,
+        req.user.userId,
         addressId,
         couponCode
     );
@@ -18,7 +18,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 
 
 export const getUserOrders = asyncHandler(async (req, res) => {
-    const orders = await getMyOrders(req.user.id);
+    const orders = await getMyOrders(req.user.userId);
     res.status(200).json({
         success: true,
         data: orders,
@@ -29,7 +29,7 @@ export const getUserOrders = asyncHandler(async (req, res) => {
 export const getUserOrderById = asyncHandler(async (req, res) => {
     const order = await getMyOrderById(
         Number(req.params.id),
-        req.user.id
+        req.user.userId
     );
     res.status(200).json({
         success: true,

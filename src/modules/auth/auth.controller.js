@@ -1,6 +1,5 @@
-import {register, login, refreshAccessToken, logout, logoutAllDevices, verifyEmail, forgotPassword, resetPassword, getCurrentUser} from "./auth.service.js";
+import {register, login, refreshAccessToken, logout, logoutAllDevices, verifyEmail, forgotPassword, resetPassword, getCurrentUser, resendVerificationEmail} from "./auth.service.js";
 import asyncHandler from "../../middlewares/asyncHandler.js";
-import { resendVerificationEmail } from "./auth.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 
 

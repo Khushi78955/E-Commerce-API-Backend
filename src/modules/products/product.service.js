@@ -88,7 +88,7 @@ export const updateProductService = async (id, data) => {
 export const deleteProductService = async (id) => {
     const product = await getProductById(id);
     if (!product) {
-        throw new ApiError(404, "Product not found.");
+        throw new ApiError(404, "Product not found");
     }
 
     await deleteProduct(id);

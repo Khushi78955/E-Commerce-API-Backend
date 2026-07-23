@@ -1,8 +1,7 @@
 import pool from "../../config/db.js";
 import ApiError from "../../utils/ApiError.js";
 import { verifyCoupon } from "../coupons/coupon.service.js";
-import { getCartItemsByUser, getAddressById, createOrder, createOrderItem, updateInventory, clearCart, getOrdersByUser, getOrderById, getAllOrders, updateOrderStatus } from "./order.repository.js";
-import { incrementCouponUsage } from "../coupons/coupon.repository.js";
+import { getCartItemsByUser, getAddressById, createOrder, createOrderItem, updateInventory, clearCart, getOrdersByUser, getOrderById, getAllOrders, updateOrderStatus, incrementCouponUsage } from "./order.repository.js";
 
 
 export const checkout = async (userId, addressId, couponCode) => {
@@ -13,7 +12,7 @@ export const checkout = async (userId, addressId, couponCode) => {
 
     const cartItems = await getCartItemsByUser(userId);
     if (cartItems.length === 0) {
-        throw new ApiError(400, "Cart is empty.");
+        throw new ApiError(400, "Cart is empty");
     }
 
     let subtotal = 0;
@@ -48,9 +47,7 @@ export const checkout = async (userId, addressId, couponCode) => {
         }
         await clearCart(client, userId);
         if (coupon) {
-            if (coupon) {
-                await incrementCouponUsage(client, coupon.id);
-            }
+            await incrementCouponUsage(client, coupon.id);
         }
         await client.query("COMMIT");
         return order;
@@ -84,7 +81,7 @@ export const getOrders = async () => {
 export const changeOrderStatus = async (orderId, status) => {
     const order = await updateOrderStatus(orderId, status);
     if (!order) {
-        throw new ApiError(404, "Order not found.");
+        throw new ApiError(404, "Order not found");
     }
     return order;
 };

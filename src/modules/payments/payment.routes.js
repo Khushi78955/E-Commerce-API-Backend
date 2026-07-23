@@ -10,7 +10,7 @@ import { createPaymentIntentSchema } from "./payment.validation.js"
 const router = express.Router();
 
 router.post("/create-intent", protect, validate(createPaymentIntentSchema), createIntent);
-router.post("/webhook", express.raw({ type: "application/json" }), webhook);
+router.post("/webhook", webhook);
 router.get("/", protect, authorize("admin"), getAllPayments)
 
 export default router;

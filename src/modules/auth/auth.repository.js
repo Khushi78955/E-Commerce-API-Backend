@@ -41,6 +41,8 @@ export const findUserById = async (userId) => {
 
 }
 
+
+
 export const createUser = async (userData) => {
     const {firstName, lastName, email, passwordHash} = userData;
     const query = 
@@ -49,6 +51,7 @@ export const createUser = async (userData) => {
     VALUES ($1, $2, $3, $4)
     RETURNING id, first_name, last_name, email, is_email_verified, created_at
     `;
+
     const values = [firstName, lastName, email, passwordHash];
     const {rows} = await pool.query(query, values);
     return rows[0];

@@ -11,6 +11,7 @@ import orderRoutes from "../modules/orders/order.routes.js";
 import paymentRoutes from "../modules/payments/payment.routes.js"
 import couponRoutes from "../modules/coupons/coupon.routes.js";
 import reviewRoutes from "../modules/reviews/review.routes.js";
+import uploadRoutes from "../modules/upload/upload.routes.js";
 
 const router = Router();
 
@@ -22,6 +23,7 @@ router.get("/", (req, res) => {
 })
 
 router.use("/api/v1/auth", authRoutes);
+router.use("/api/v1/uploads", uploadRoutes);
 router.use("/api/v1/categories", categoryRoutes);
 router.use("/api/v1/products", productRoutes);
 router.use("/api/v1/inventory", inventoryRoutes);

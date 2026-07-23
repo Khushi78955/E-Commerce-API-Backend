@@ -9,8 +9,6 @@ import comparePassword from "../../utils/comparePassword.js";
 import hashToken from "../../utils/hashToken.js";
 import generateTokens from "../../utils/generateTokens.js";
 
-import sendVerificationEmail from "../../mail/sendVerificationEmail.js";
-import sendResetPasswordEmail from "../../mail/sendResetPasswordEmail.js";
 
 import { findUserByEmail, findUserById, createUser, findRoleByName, assignRoleToUser, getUserRoles, createRefreshToken, findRefreshToken, revokeRefreshToken, revokeAllRefreshTokens, createUserSession, deleteUserSession, createLoginAttempt, createEmailVerificationToken, findEmailVerificationToken, markEmailVerificationTokenAsUsed, verifyUserEmail, createPasswordResetToken, findPasswordResetToken, markPasswordResetTokenAsUsed, updateUserPassword, findOAuthAccount, createOAuthAccount, updateLastLogin } from "./auth.repository.js";
 
@@ -62,7 +60,6 @@ export const register = async ({firstName, lastName, email, password}) => {
         message: "Registration successful. Please verify your email", user
     }
 }
-
 
 
 
@@ -207,7 +204,7 @@ export const logoutAllDevices = async (userId) => {
     }
     await revokeAllRefreshTokens(userId);
     return {
-        message: "Logged out from all devices successfully.",
+        message: "Logged out from all devices successfully",
     };
 }
 
@@ -271,7 +268,7 @@ export const resetPassword = async ({token, password}) => {
     await revokeAllRefreshTokens(resetToken.user_id);
     return {
         message:
-        "Password reset successful. Please login again.",
+        "Password reset successful. Please login again",
     };
 }
 
@@ -304,13 +301,13 @@ export const getCurrentUser = async (userId) => {
 export const resendVerificationEmail = async (email) => {
     const user = await findUnverifiedUserByEmail(email);
     if (!user) {
-        throw new ApiError(404, "User not found.");
+        throw new ApiError(404, "User not found");
     }
     if (user.is_email_verified) {
-        throw new ApiError(400, "Email is already verified.");
+        throw new ApiError(400, "Email is already verified");
     }
     if (!user.is_active) {
-        throw new ApiError(403, "Your account has been disabled.");
+        throw new ApiError(403, "Your account has been disabled");
     }
 
     await invalidateEmailVerificationTokens(user.id);
@@ -328,6 +325,6 @@ export const resendVerificationEmail = async (email) => {
         verificationToken,
     });
     return {
-        message: "Verification email sent successfully.",
+        message: "Verification email sent successfully",
     };
 };

@@ -40,42 +40,49 @@ export const updateCouponSchema = z.object({
             .positive(),
     }),
 
-    body: z.object({
-        code: z
-            .string()
-            .trim()
-            .min(3)
-            .max(50)
-            .optional(),
+    body: z
+        .object({
+            code: z
+                .string()
+                .trim()
+                .min(3)
+                .max(50)
+                .optional(),
 
-        discountType: z
-            .enum([
-                "percentage",
-                "fixed",
-            ])
-            .optional(),
+            discountType: z
+                .enum([
+                    "percentage",
+                    "fixed",
+                ])
+                .optional(),
 
-        discountValue: z.coerce
-            .number()
-            .positive()
-            .optional(),
+            discountValue: z.coerce
+                .number()
+                .positive()
+                .optional(),
 
-        minimumOrderAmount: z.coerce
-            .number()
-            .min(0)
-            .optional(),
+            minimumOrderAmount: z.coerce
+                .number()
+                .min(0)
+                .optional(),
 
-        usageLimit: z.coerce
-            .number()
-            .int()
-            .positive()
-            .optional(),
+            usageLimit: z.coerce
+                .number()
+                .int()
+                .positive()
+                .optional(),
 
-        expiresAt: z
-            .string()
-            .datetime()
-            .optional(),
-    }),
+            expiresAt: z
+                .string()
+                .datetime()
+                .optional(),
+        })
+        .refine(
+            (data) => Object.keys(data).length > 0,
+            {
+                message: "At least one field must be provided for update.",
+            }
+        ),
 });
 
 export const couponIdSchema = z.object({

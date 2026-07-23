@@ -13,7 +13,7 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                const normalizedProfile = normalizeProviderProfile("google", profile);
+                const normalizedProfile = normalizeProviderProfile("discord", profile);
                 done(null, {
                     profile: normalizedProfile,
                 });

@@ -4,7 +4,7 @@ import ApiError from "../utils/ApiError.js";
 const validate = (schema) => {
     return (req, res, next) => {
         const validator = z.object({
-            body: schema.body ?? z.object({}).passthrough(),
+            body: schema.body ?? z.any(),
             params: schema.params ?? z.object({}).passthrough(),
             query: schema.query ?? z.object({}).passthrough(),
         });
@@ -18,7 +18,7 @@ const validate = (schema) => {
                 field: issue.path.join("."),
                 message: issue.message,
             }));
-            return next(new ApiError(400, "Validation failed.", errors));
+            return next(new ApiError(400, "Validation failed", errors));
         }
         req.body = result.data.body;
         req.params = result.data.params;

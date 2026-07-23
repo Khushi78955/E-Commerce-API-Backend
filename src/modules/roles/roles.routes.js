@@ -11,8 +11,8 @@ router.use(protect);
 router.use(authorize("admin"));
 
 router.get("/", listRolesController);
-router.get("/:id", getRoleController);
 router.get("/permissions/all", listPermissionsController);
+router.get("/:id", getRoleController);
 router.post("/assign", validate(assignRoleSchema), assignUserRoleController)
 router.delete("/remove", validate(removeRoleSchema), removeUserRoleController)
 

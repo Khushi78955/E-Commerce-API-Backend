@@ -14,7 +14,6 @@ export const getInventoryByProductIdService = async (productId) => {
     if (!inventory) {
         throw new ApiError(404, "Inventory not found");
     }
-
     return inventory;
 }
 
@@ -29,7 +28,6 @@ export const createInventoryService = async (productId, quantity) => {
     if(existingInventory){
         throw new ApiError(409, "Inventory already exists");
     }
-
     return await createInventory(productId, quantity);
 }
 

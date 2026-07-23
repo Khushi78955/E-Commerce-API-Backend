@@ -9,7 +9,7 @@ export const create = asyncHandler(async (req, res) => {
     const review = await addReview(req.user.userId, productId, rating, comment);
     res.status(201).json({
         success: true,
-        message: "Review created successfully.",
+        message: "Review created successfully",
         data: review,
     });
 });
@@ -31,7 +31,7 @@ export const update = asyncHandler(async (req, res) => {
     const review = await editReview(id, req.user.userId, rating, comment);
     res.status(200).json({
         success: true,
-        message: "Review updated successfully.",
+        message: "Review updated successfully",
         data: review,
     });
 });
@@ -43,6 +43,6 @@ export const remove = asyncHandler(async (req, res) => {
     await removeReview(id, req.user.userId);
     res.status(200).json({
         success: true,
-        message: "Review deleted successfully.",
+        message: "Review deleted successfully",
     });
 });

@@ -46,14 +46,14 @@ export const addToCartService = async (userId, productId, quantity) => {
 export const updateCartItemService = async (userId, productId, quantity) => {
     const cartItem = await getCartItem(userId, productId);
     if (!cartItem) {
-        throw new ApiError(404, "Cart item not found.");
+        throw new ApiError(404, "Cart item not found");
     }
     const inventory = await getInventoryByProductId(productId);
     if (!inventory) {
-        throw new ApiError(404, "Inventory not found.");
+        throw new ApiError(404, "Inventory not found");
     }
     if (quantity > inventory.quantity - inventory.reserved_quantity) {
-        throw new ApiError(400, "Insufficient stock.");
+        throw new ApiError(400, "Insufficient stock");
     }
     return await updateCartItem(userId, productId, quantity);
 
@@ -62,7 +62,7 @@ export const updateCartItemService = async (userId, productId, quantity) => {
 export const removeCartItemService = async (userId, productId) => {
     const cartItem = await getCartItem(userId, productId);
     if (!cartItem) {
-       throw new ApiError(404, "Cart item not found.");
+       throw new ApiError(404, "Cart item not found");
     }
     await removeCartItem(userId, productId);
 };

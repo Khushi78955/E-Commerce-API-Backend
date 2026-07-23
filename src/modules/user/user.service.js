@@ -39,7 +39,7 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
 
     const isPasswordValid = await bcrypt.compare(currentPassword, user.password_hash)
     if (!isPasswordValid) {
-        throw new ApiError(400, "Current password is incorrect.");
+        throw new ApiError(400, "Current password is incorrect");
     }
 
     const passwordHash = await bcrypt.hash(newPassword, 12);
@@ -53,7 +53,7 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
 export const deleteAccount = async (userId) => {
     const user = await getUserById(userId);
     if (!user) {
-        throw new ApiError(404, "User not found.");
+        throw new ApiError(404, "User not found");
     }
 
     await revokeAllRefreshTokens(userId);

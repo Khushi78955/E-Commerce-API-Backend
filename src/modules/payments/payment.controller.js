@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const createIntent = asyncHandler(async (req, res) => {
     const { orderId } = req.body;
-    const result = await createPaymentIntent(orderId, req.user.id);
+    const result = await createPaymentIntent(orderId, req.user.userId);
     res.status(200).json({
         success: true,
         message: "Payment Intent created successfully.",

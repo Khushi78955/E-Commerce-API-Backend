@@ -12,8 +12,13 @@ export const updateProfileSchema = z.object({
             .string()
             .trim()
             .min(2, "Last name must be at least 2 characters.")
-            .max(100, "Last name cannot exceed 100 characters.")
-    })
+            .max(100, "Last name cannot exceed 100 characters."),
+
+        profile_image_url: z
+            .string()
+            .url("Invalid profile image URL.")
+            .optional(),
+    }),
 });
 
 export const changePasswordSchema = z.object({
@@ -34,8 +39,4 @@ export const changePasswordSchema = z.object({
                 "Password must contain at least one special character."
             )
     })
-});
-
-export const updateProfileImageSchema = z.object({
-    body: z.object({})
 });

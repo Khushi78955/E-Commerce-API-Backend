@@ -28,6 +28,10 @@ const env = cleanEnv(process.env, {
     REDIS_HOST: str(),
     REDIS_PORT: port(),
     REDIS_PASSWORD: str({ default: "" }),
+
+    CLOUDINARY_CLOUD_NAME: str(),
+    CLOUDINARY_API_KEY: str(),
+    CLOUDINARY_API_SECRET: str(),
 });
 
 export default env;

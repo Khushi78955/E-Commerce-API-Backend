@@ -10,23 +10,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const createPaymentIntent = async (orderId, userId) => {
     const order = await getOrderById(orderId, userId);
     if (!order) {
-        throw new ApiError(404, "Order not found.");
+        throw new ApiError(404, "Order not found");
     }
     
     const payment = await getPaymentByOrderId(order.id);
     if (payment?.status === "paid") {
-        throw new ApiError(400, "Order has already been paid.");
+        throw new ApiError(400, "Order has already been paid");
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(Number(order.total_amount) * 100),
+        amount: Math.round(Number(order.total) * 100),
         currency: "inr",
         metadata: {
             orderId: order.id.toString(),
         },
     });
 
-    await createPayment(order.id, paymentIntent.id, order.total_amount, "pending");
+    await createPayment(order.id, paymentIntent.id, order.total, "pending");
 
     return {
         clientSecret: paymentIntent.client_secret,

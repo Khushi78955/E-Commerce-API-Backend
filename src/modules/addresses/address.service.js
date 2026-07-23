@@ -24,7 +24,6 @@ export const createAddressService = async (userId, data) => {
     if (data.is_default) {
         await clearDefaultAddresses(userId);
     }
-
     return await createAddress({
         user_id: userId,
         ...data,
