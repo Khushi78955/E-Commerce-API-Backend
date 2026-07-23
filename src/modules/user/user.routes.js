@@ -1,7 +1,7 @@
 import {Router} from "express";
 
 import { protect } from "../auth/auth.middleware.js";
-import { validate } from "../../middlewares/validate.js";
+import validate from "../../middlewares/validate.js";
 
 import { getProfileController, updateProfileController, changePasswordController, deleteAccountController } from "./user.controller.js";
 import { updateProfileSchema, changePasswordSchema } from "./user.validation.js";

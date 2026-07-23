@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 
 import { getUserProfile, getUserById, updateUserProfile, updatePassword, softDeleteUser, revokeAllRefreshTokens } from "./user.repository.js";
 
-import {ApiError} from "../../utils/ApiError.js";
+import ApiError from "../../utils/ApiError.js";
 
 
 export const getProfile = async (userId) => {

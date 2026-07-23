@@ -1,6 +1,6 @@
 import {getDashboard, listUsers, getUser, changeUserStatus} from "./admin.service.js";
-import { asyncHandler } from "../../middlewares/asyncHandler.js";
-import { ApiResponse } from "../../utils/ApiResponse.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
+import ApiResponse from "../../utils/ApiResponse.js";
 
 
 export const getDashboardController = asyncHandler(async (req, res) => {

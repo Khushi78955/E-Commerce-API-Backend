@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { protect, authorize } from "../auth/auth.middleware.js";
-import { validate } from "../../middlewares/validate.js"
+import validate from "../../middlewares/validate.js";
 
 import {getDashboardController, listUsersController, getUserController, changeUserStatusController} from "./admin.controller.js";
 import { updateUserStatusSchema } from "./admin.validation.js";

@@ -1,5 +1,5 @@
 import { getAllRoles, getRoleById, getAllPermissions, assignRole, removeRole } from "./roles.repository.js";
-import { ApiError } from "../../utils/ApiError.js";
+import ApiError from "../../utils/ApiError.js";
 import { getUserById } from "../user/user.repository.js";
 
 export const listRoles = async () => {

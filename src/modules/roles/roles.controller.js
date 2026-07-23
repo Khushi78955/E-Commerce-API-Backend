@@ -1,6 +1,6 @@
 import {listRoles, getRole, listPermissions, assignUserRole, removeUserRole} from "./roles.service.js";
-import { asyncHandler } from "../../middlewares/asyncHandler.js";
-import { ApiResponse } from "../../utils/ApiResponse.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
+import ApiResponse from "../../utils/ApiResponse.js";
 
 
 export const listRolesController = asyncHandler(async (req, res) => {

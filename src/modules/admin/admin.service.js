@@ -1,5 +1,5 @@
 import { getDashboardStats, getAllUsers, getUserById, updateUserStatus } from "./admin.repository.js";
-import {ApiError} from "../../utils/ApiError.js";
+import ApiError from "../../utils/ApiError.js";
 
 export const getDashboard = async () => {
     return await getDashboardStats();

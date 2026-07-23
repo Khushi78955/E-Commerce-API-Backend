@@ -1,6 +1,6 @@
 import { getProfile, updateProfile, changePassword, deleteAccount } from "./user.service.js";
-import {asyncHandler} from "../../middlewares/asyncHandler.js";
-import {ApiResponse} from "../../utils/ApiResponse.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
+import ApiResponse from "../../utils/ApiResponse.js";
 
 
 export const getProfileController = asyncHandler(async (req, res) => {
